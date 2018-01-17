@@ -58,7 +58,7 @@ marvel.characters.findByName('spider-man',function(err, results) {
   if (err) {
     return console.error(err);
   }
-  console.log(results.data[0].id);
+  console.log(results.data[0]);
 });
 
 
