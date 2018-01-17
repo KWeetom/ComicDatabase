@@ -1,13 +1,25 @@
 console.log('Started');
 var http = require('http');
 var fs = require('fs');
-
 var api = require('marvel-api');
+
+//this block allows the server to render the html
+http.createServer(function (req, res) {
+  //fs reads the defined html file
+    fs.readFile ('index.html',function(err,data){
+      //header is required to tell server what kind of data is being read
+      res.writeHead(200, {'Content-Type': 'text/html'});
+      //res.write('Hello World!');
+      //writes the html to the page with data from index.html
+      res.write(data);
+      res.end();
+    });
+}).listen(8080);
+
 
 var marvel = api.createClient({
 publicKey: 'b418924bd54847ace74ceaa0e9b44017',
 privateKey: '16daedc6fc0a02f239a9ad700e10b526498a9afd'
-
 });
 
 // api('characters', {
@@ -49,16 +61,4 @@ marvel.characters.findByName('spider-man',function(err, results) {
   console.log(results.data[0].id);
 });
 
-//this block allows the server to render the html
-http.createServer(function (req, res) {
-  //fs reads the defined html file
-    fs.readFile ('index.html',function(err,data){
-      //header is required to tell server what kind of data is being read
-      res.writeHead(200, {'Content-Type': 'text/html  '});
-      //res.write('Hello World!');
-      //writes the html to the page with data from index.html
-      res.write(data);
-      res.end();
-    });
-}).listen(8080);
 
